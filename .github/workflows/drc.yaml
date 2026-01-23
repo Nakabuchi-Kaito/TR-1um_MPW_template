@@ -26,6 +26,9 @@ jobs:
           cfg = yaml.safe_load(pathlib.Path('info.yaml').read_text())
           PY
 
+      - name: Use variable
+        run: echo "$value"
+
       - name: Checkout ruleset repo (with includes)
         run: |
           git clone --depth 1 --branch "${{ steps.cfg.outputs.ref }}" \
