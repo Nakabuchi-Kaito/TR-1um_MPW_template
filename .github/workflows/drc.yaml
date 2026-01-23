@@ -24,11 +24,13 @@ jobs:
           cfg     = yaml.safe_load(pathlib.Path("info.yaml").read_text())
           gds     = cfg["gds"]["file"]
           repo    = cfg["drc"]["repo"]
+          ref     = cfg["drc"]["ref"]
           entry   = cfg["drc"]["entry"]
           report  = cfg["drc"]["report"]
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
             f.write(f"gds={gds}\n")
             f.write(f"repo={repo}\n")
+            f.write(f"ref={ref}\n")
             f.write(f"entry={entry}\n")
             f.write(f"report={report}\n")
           PY
@@ -37,6 +39,8 @@ jobs:
         run: |
           echo ${{ steps.cfg.outputs.gds }}
           echo ${{ steps.cfg.outputs.repo }}
+          echo ${{ steps.cfg.outputs.ref }}
+          echo ${{ steps.cfg.outputs.entry }}
           echo ${{ steps.cfg.outputs.report }}
 
       - name: Checkout ruleset repo (with includes)
