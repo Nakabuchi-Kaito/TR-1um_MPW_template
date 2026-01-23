@@ -26,7 +26,7 @@ jobs:
           url = cfg["drc"]["rules_url"]
           report = cfg["drc"]["report"]
           print(gds)
-          print(rules_url)
+          print(url)
           print(report)
           PY
 
