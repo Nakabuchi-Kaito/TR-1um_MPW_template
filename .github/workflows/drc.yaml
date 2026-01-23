@@ -27,7 +27,7 @@ jobs:
           PY
 
       - name: Use variable
-        run: echo "$value"
+        run: echo $value
 
       - name: Checkout ruleset repo (with includes)
         run: |
