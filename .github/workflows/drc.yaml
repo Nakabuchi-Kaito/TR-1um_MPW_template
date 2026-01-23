@@ -20,6 +20,7 @@ jobs:
         id: cfg
         run: |
           ls -la .
+          echo "value=Hello, GitHub Actions!" >> $GITHUB_OUTPUT
           python3 - << 'PY'
           import yaml, os, pathlib
           cfg = yaml.safe_load(pathlib.Path('info.yaml').read_text())
