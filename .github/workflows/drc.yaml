@@ -1,0 +1,50 @@
+name: drc
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  drc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install KLayout + deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y klayout git
+          python3 -m pip install --user pyyaml
+
+      - name: Read info.yaml
+        id: cfg
+        run: |
+          python3 - << 'PY'
+          import yaml, os, pathlib
+          cfg = yaml.safe_load(pathlib.Path("info.yaml").read_text())
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+            f.write(f"gds={cfg['gds_file']}\n")
+            f.write(f"repo={cfg['drc']['repo']}\n")
+            f.write(f"ref={cfg['drc']['ref']}\n")
+            f.write(f"entry={cfg['drc']['entry']}\n")
+            f.write(f"report={cfg['drc']['report']}\n")
+          PY
+
+      - name: Checkout ruleset repo (with includes)
+        run: |
+          git clone --depth 1 --branch "${{ steps.cfg.outputs.ref }}" \
+            "${{ steps.cfg.outputs.repo }}" rules
+          test -f "rules/${{ steps.cfg.outputs.entry }}"
+          ls -la rules
+
+      - name: Run DRC (headless)
+        run: |
+          mkdir -p out
+          klayout -b -r "rules/${{ steps.cfg.outputs.entry }}" \
+            -rd input="${{ steps.cfg.outputs.gds }}" \
+            -rd report="${{ steps.cfg.outputs.report }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: drc-report
+          path: out/

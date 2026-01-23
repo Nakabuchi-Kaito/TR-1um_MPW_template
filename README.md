@@ -1,42 +1,49 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
-
 # TR-1um_MPW_template
 
 - [Read the documentation for project](docs/info.md)
 
-## What is Tiny Tapeout?
+# TR-1um_MPW Precheck
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+Precheck for OpenSUSI MPW runs using the TR-1um Drawing Layer PDK
 
-To learn more and get started, visit https://tinytapeout.com.
+The precheck performs the following checks:
 
-## Set up your Verilog project
+- Ensures there is only one top-level cell and it matches the `--top` argument.
+- Checks that the origin is at (0,0), the minimum grid is 0.05um, 
+- Checks the non-diagnal shape 
+- Runs KLayout DRC and antenna check.
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+## Prerequisites
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
+Clone the PDK with: `make clone-pdk`.
 
-## Enable GitHub actions to build the results page
+## Run the Precheck
 
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
+Enable a shell with all tools: `nix-shell`
 
-## Resources
+Export the environment variables:
 
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
+```
+export PDK_ROOT=gf180mcu && export PDK=gf180mcuD
+```
 
-## What next?
+Now run the precheck with your layout:
 
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+```
+python3 precheck.py --input chip_top.gds
+```
+
+> [!NOTE]
+> If your top-level cell name does not match the file name, you need to specify it using the `--top` argument:
+>
+> ```
+> python3 precheck.py --input chip_top.gds --top my_top_cell
+> ```
+>
+> If you use a slot size other than 1x1, you need to specify it using the `--slot` argument:
+>
+> ```
+> python3 precheck.py --input chip_top.gds --slot 0p5x0p5
+> ```
+>
+> The valid slot sizes are: `1x1`, `0p5x1`, `1x0p5`, `0p5x0p5`.
