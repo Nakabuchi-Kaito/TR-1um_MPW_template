@@ -45,10 +45,11 @@ jobs:
 
       - name: Checkout ruleset repo (with includes)
         run: |
-          git clone --depth 1 --branch "${{ steps.cfg.outputs.ref }}" \
-            "${{ steps.cfg.outputs.repo }}" rules
-          test -f "rules/${{ steps.cfg.outputs.entry }}"
-          ls -la rules
+          git config core.sparsecheckout true
+          echo "${{ steps.cfg.outputs.entry }}" >> .git/info/sparse-checkout
+          git clone --depth 1 --branch "${{ steps.cfg.outputs.ref }}" "${{ steps.cfg.outputs.repo }}" klayoutrc
+          test -f "${{ steps.cfg.outputs.entry }}"
+          ls -la klayoutrc
 
       - name: Run DRC (headless)
         run: |
