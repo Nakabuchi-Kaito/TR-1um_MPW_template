@@ -22,7 +22,7 @@ project:
 # Do not change!
 drc:
   repo:   "https://github.com/OpenSUSI/TR-1um.git"
-  ref:    "v1.2.3"
+  ref:    "v0.1"
   entry:  "lib.tech/klayout/drc/run.drc"       
   report: "out/report.lyrdb"
 
