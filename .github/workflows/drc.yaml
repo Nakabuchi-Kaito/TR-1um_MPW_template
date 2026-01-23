@@ -19,6 +19,7 @@ jobs:
       - name: Read info.yaml
         id: cfg
         run: |
+          ls -la .
           python3 - << 'PY'
           import yaml, os, pathlib
           cfg = yaml.safe_load(pathlib.Path("info.yaml").read_text())
