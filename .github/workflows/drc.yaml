@@ -23,12 +23,14 @@ jobs:
           import yaml, os, pathlib
           cfg     = yaml.safe_load(pathlib.Path("info.yaml").read_text())
           gds     = cfg["gds"]["file"]
+          cell    = cfg["gds"]["top_cell"]
           repo    = cfg["drc"]["repo"]
           ref     = cfg["drc"]["ref"]
           entry   = cfg["drc"]["entry"]
           report  = cfg["drc"]["report"]
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
             f.write(f"gds={gds}\n")
+            f.write(f"cell={cell}\n")
             f.write(f"repo={repo}\n")
             f.write(f"ref={ref}\n")
             f.write(f"entry={entry}\n")
@@ -38,16 +40,13 @@ jobs:
       - name: Checkout libs.tech from ruleset repo 
         run: |
           git clone --filter=blob:none --sparse --branch "${{ steps.cfg.outputs.ref }}" "${{ steps.cfg.outputs.repo }}" TR-1um
-          cd TR-1um
-          git sparse-checkout add ${{ steps.cfg.outputs.entry }}
-          cd ..     
-          ls -la TR-1um
+          ( cd TR-1um ; git sparse-checkout add ${{ steps.cfg.outputs.entry }} )
 
       - name: Run DRC (headless)
         run: |
           klayout -b -r "TR-1um/libs.tech/klayout/drc/run.drc" \
             -rd input="${{ steps.cfg.outputs.gds }}" \
-            -rd report="${{ steps.cfg.outputs.report }}"
+            -rd top_cell="${{ steps.cfg.outputs.cell }}" 
 
       - uses: actions/upload-artifact@v4
         with:

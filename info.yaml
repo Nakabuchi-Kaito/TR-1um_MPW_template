@@ -3,7 +3,8 @@
 # LICENSE: Apache License Version 2.0, January 2004,
 #          http://www.apache.org/licenses/
 # ----- ------ ----- ----- ------ ----- ----- ------ ----- 
-# OpenSUSI TR-1um shuttle project information
+# OpenSUSI TR-1um MPW project information
+#
 project:
   title:        ""      # Project title
   author:       ""      # Your name
@@ -12,14 +13,14 @@ project:
 
 # Your top module name must start with "tr-1um_". Make it unique by including your github username:
 gds:
-  file:     "src/TR-1um_frame_25x25.gds"
-  top_cell: "OSS_FRAME"
-#  Do not change!
-
+  file:     "src/tr-1um_example.gds"
+  top_cell: "TOP"
+#
 cir:
-  files: "project.cir"
+  files:    "src/tr-1um_example.cir"
 
-# Do not change!
+# Donot modify below this line unless you know what you are doing
+# DRC ruleset repository information
 drc:
   repo:   "https://github.com/OpenSUSI/TR-1um.git"
   ref:    "v0.1"
