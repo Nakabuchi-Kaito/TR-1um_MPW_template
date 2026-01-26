@@ -2,9 +2,6 @@
 # This workflow automates the DRC process using KLayout to verify that the GDS design
 # meets all the manufacturing rules defined in the technology ruleset
 name: check
-branding:
-  color: blue
-  icon: eye
 
 # Workflow trigger conditions
 on:
