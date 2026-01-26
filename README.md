@@ -13,6 +13,8 @@ The pre-check validates that:
 
 - The top cell name must be unique (not plural).
 
+- The top cell database unit (dbu) must be 0.001um
+
 - The top cell drawing area fits within the range (-1250, -1250) to (1250, 1250).
 
 - The top cell includes one of the OpenSUSI-recommended frame cells OSS_FRAME or OSS_FRAME_TEG.
@@ -21,6 +23,8 @@ The pre-check validates that:
   
   
 ![OpenSUSI MPW](docs/OpenSUSI-MPW.png)
+
+![OpenSUSI MPW](docs/OpenSUSI-MPW-TEG.png)
 
 
 **DRC**
