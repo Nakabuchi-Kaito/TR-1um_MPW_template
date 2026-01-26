@@ -1,7 +1,10 @@
 # Design Rule Check (DRC) Workflow
 # This workflow automates the DRC process using KLayout to verify that the GDS design
 # meets all the manufacturing rules defined in the technology ruleset
-name: drc
+name: check
+branding:
+  color: blue
+  icon: eye
 
 # Workflow trigger conditions
 on:
@@ -12,7 +15,7 @@ on:
 
 jobs:
   # DRC job definition - executes on Ubuntu Latest Runner
-  drc:
+  prepre:
     runs-on: ubuntu-latest
     steps:
       # Step 1: Clone the repository to get the project files
@@ -27,6 +30,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y klayout git
           python3 -m pip install --user pyyaml
+          python3 -m pip install --user click
+          python3 -m pip install --user klayout
           klayout -v
 
       # Step 3: Parse configuration from info.yaml
@@ -74,7 +79,11 @@ jobs:
              "${{ steps.cfg.outputs.repo }}" TR-1um
           ( cd TR-1um ; git sparse-checkout add ${{ steps.cfg.outputs.entry }} )
 
-      # Step 5: Execute KLayout DRC in headless mode
+  # precheck job definition - executes on Ubuntu Latest Runner
+  drc: 
+    need: prepre
+    runs-on: ubuntu-latest
+    steps:
       # This step runs the actual Design Rule Check on the GDS file using KLayout.
       # Parameters:
       # - -b: Batch/headless mode (no GUI)

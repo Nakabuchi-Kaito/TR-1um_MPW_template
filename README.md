@@ -2,10 +2,17 @@
 
 - [Read the documentation for project](docs/info.md)
 
-# TR-1um_MPW Precheck
+# TR-1um_MPW actions
 
-Precheck for OpenSUSI MPW runs using the TR-1um Drawing Layer PDK
+GitHub CI/CD actions will perform below.
 
-The precheck performs the following checks:
+The **precheck** performs the following checks:
 
-- Runs KLayout DRC and antenna check.
+- TOP cell name is match to info.yaml
+- TOP cell is not prural.
+- TOP cell drawing area matched into (-1250,-1250):(1250,1250).
+- TOP cell include OpenSUSI recommeded Frame cell ['OSS_FRAME', 'OSS_FRAME_TEG']
+
+The **drc** performs the following checks:
+- Runs KLayout DRC(Drawing) and antenna check.
+
