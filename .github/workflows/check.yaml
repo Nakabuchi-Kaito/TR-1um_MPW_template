@@ -14,6 +14,13 @@ jobs:
   # DRC job definition - executes on Ubuntu Latest Runner
   Precheck:
     runs-on: ubuntu-latest
+    outputs:
+      gds:    ${{ steps.cfg.outputs.gds }}
+      cell:   ${{ steps.cfg.outputs.cell }}
+      repo:   ${{ steps.cfg.outputs.repo }}
+      ref:    ${{ steps.cfg.outputs.ref }}
+      entry:  ${{ steps.cfg.outputs.entry }}
+      report: ${{ steps.cfg.outputs.report }}
     steps:
       # Step 1: Clone the repository to get the project files
       - uses: actions/checkout@v4
