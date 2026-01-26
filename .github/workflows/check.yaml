@@ -79,11 +79,6 @@ jobs:
              "${{ steps.cfg.outputs.repo }}" TR-1um
           ( cd TR-1um ; git sparse-checkout add ${{ steps.cfg.outputs.entry }} )
 
-  # precheck job definition - executes on Ubuntu Latest Runner
-  drc: 
-    need: prepre
-    runs-on: ubuntu-latest
-    steps:
       # This step runs the actual Design Rule Check on the GDS file using KLayout.
       # Parameters:
       # - -b: Batch/headless mode (no GUI)
