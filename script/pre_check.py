@@ -42,21 +42,21 @@ def check_top(input: str, top: str):
     # Check database unit (dbu).
     if ly.dbu != 0.001:
         print("[Error]: Database unit (dbu) is not 0.001um.")
-        sys.exit(-1)
+        sys.exit(1)
 
     # Check bounding box matches expected die area.
     if ly.top_cell().dbbox().p1 != pya.DPoint(-CHIP_SIZE_WIDTH/2, -CHIP_SIZE_HEIGHT/2) or ly.top_cell().dbbox().p2 != pya.DPoint(CHIP_SIZE_WIDTH/2, CHIP_SIZE_HEIGHT/2) :
         print("[Error]: Layout area is not (%.2f,%.2f)(%.2f,%.2f)." % (-CHIP_SIZE_WIDTH/2, -CHIP_SIZE_HEIGHT/2, CHIP_SIZE_WIDTH/2, CHIP_SIZE_HEIGHT/2) )
-        sys.exit(-1)
+        sys.exit(1)
 
     # Check required frame/TEG cell exists.
     for cl in ly.each_cell():    
         if cl.name in FRAME_CELL_NAMEs:
             print(f"Design name '{input}' fit into OpenSUSI-MPW die area (%.2f,%.2f)(%.2f,%.2f)." % (-CHIP_SIZE_WIDTH/2, -CHIP_SIZE_HEIGHT/2, CHIP_SIZE_WIDTH/2, CHIP_SIZE_HEIGHT/2) )
-            sys.exit(1)
+            sys.exit(0)
     # No frame found.
     print(f"[Error]: There is NO OpenSUSI-MPW recomended frame/TEG in {ly.top_cell().name}.")
-    sys.exit(-1)
+    sys.exit(1)
 
 if __name__ == "__main__":
     check_top()

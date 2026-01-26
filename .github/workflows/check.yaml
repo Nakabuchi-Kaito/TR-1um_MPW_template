@@ -12,7 +12,7 @@ on:
 
 jobs:
   # DRC job definition - executes on Ubuntu Latest Runner
-  precheck:
+  Precheck:
     runs-on: ubuntu-latest
     steps:
       # Step 1: Clone the repository to get the project files
@@ -77,9 +77,9 @@ jobs:
         run: |
           python3 script/pre_check.py --top ${{ steps.cfg.outputs.cell }} ${{ steps.cfg.outputs.gds }}
 
-  drc:
+  DRC:
     runs-on: ubuntu-latest
-    needs: precheck
+    needs: Precheck
     steps:
       - uses: actions/checkout@v4
       # Step 2: Install required dependencies and tools
