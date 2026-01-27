@@ -69,7 +69,7 @@ jobs:
       # Step 5: Run pre-check script to validate GDS top cell and die area
       - name: Run python script
         run: |
-          python3 script/pre_check.py --top ${{ steps.cfg.outputs.cell }} ${{ steps.cfg.outputs.gds }}
+          python3 script/pre_check.py --top ${{ steps.cfg.outputs.cell }} src/${{ steps.cfg.outputs.gds }}
 
   # Main DRC job, depends on Precheck outputs.
   DRC:
