@@ -43,4 +43,5 @@ The MDP stage performs the following:
 
 - The resulting IP62 GDSII can be downloaded for reference and further verification.
 
+- KLayout DRC(MASK) checks and Antenna checks.
 
