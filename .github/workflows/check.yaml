@@ -133,14 +133,29 @@ jobs:
       # Step 4: Run DRC in batch mode with parameters
       - name: Run MDP (headless)
         run: |
-          mkdir -p run
+          mkdir -p mdp
           klayout -b -r TR-1um/libs.tech/klayout/drc/run_mdp.drc \
             -rd input=src/${{ needs.Precheck.outputs.gds }} \
             -rd top_cell=${{ needs.Precheck.outputs.cell }} \
-            -rd output=run/${{ needs.Precheck.outputs.output }}
+            -rd output=mdp/${{ needs.Precheck.outputs.output }}
 
       # Step 6: Upload DRC results as GitHub Actions artifact
       - uses: actions/upload-artifact@v4
         with:
           name: IP62_GDSII
-          path: run/${{ needs.Precheck.outputs.output }}
+          path: mdp/${{ needs.Precheck.outputs.output }}
+
+      - name: Run IP62 DRC (headless)
+        run: |
+          klayout -b -r TR-1um/libs.tech/klayout/drc/run_IP62.drc \
+            -rd input=mdp/${{ needs.Precheck.outputs.output }}
+            -rd top_cell=${{ needs.Precheck.outputs.cell }} \
+            -rd report=mdp/${{ needs.Precheck.outputs.report }}
+
+      # Step 6: Upload DRC results as GitHub Actions artifact
+      - uses: actions/upload-artifact@v4
+        if: ${{ hashFiles(format('mdp/{0}', needs.Precheck.outputs.report)) != '' }}
+        with:
+          name: mdp-report
+          path: mdp/${{ needs.Precheck.outputs.report }}
+
