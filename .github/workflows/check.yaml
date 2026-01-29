@@ -165,13 +165,13 @@ jobs:
       # Upload IP62 DRC report if generated.
       - uses: actions/upload-artifact@v4
         with:
-          name: DRC_report_IP62
+          name: DRC_report_MDP
           if-no-files-found: error
           path: mdp/${{ needs.Precheck.outputs.report }}
 
       # Upload IP62 GDSII report if no report was generated.
       - uses: actions/upload-artifact@v4
         with:
-          name: IP62_GDSII
+          name: GDSII_MDP
           if-no-files-found: error
           path: mdp/${{ needs.Precheck.outputs.output }}
