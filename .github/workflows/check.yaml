@@ -113,35 +113,13 @@ jobs:
           name: drc-report
           path: log/${{ needs.Precheck.outputs.report }}
 
-  # ESD job (depends on Precheck and DRC).
-  ESD: 
-    runs-on: ubuntu-latest
-    # Ensure upstream jobs complete and outputs are available.
-    needs: [Precheck, DRC]
-    steps:
-      # Checkout repository.
-      - uses: actions/checkout@v4
-      # Install KLayout and dependencies.
-      - name: Install KLayout + deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y klayout git
-          klayout -v
-
-      # Fetch ruleset (sparse checkout).
-      - name: Checkout libs.tech from ruleset repo
-        run: |
-          git clone --filter=blob:none --sparse --branch "${{ needs.Precheck.outputs.ref }}"\
-             "${{ needs.Precheck.outputs.repo }}" TR-1um
-          ( cd TR-1um ; git sparse-checkout add ${{ needs.Precheck.outputs.entry }} )
-
-      # Run ESD in batch mode.
-      - name: Run ESD (headless)
+      # Run LVS in batch mode.
+      - name: Run LVS (headless)
         run: |
           klayout -b -r TR-1um/libs.tech/klayout/lvs/run.lvs \
             -rd input=src/${{ needs.Precheck.outputs.gds }} \
             -rd top_cell=${{ needs.Precheck.outputs.cell }} \
-            -rd circuit=scr/${{ needs.Precheck.outputs.circuit }}
+            -rd circuit=src/${{ needs.Precheck.outputs.circuit }}
 
   # MDP job (depends on Precheck and DRC).
   MDP:
