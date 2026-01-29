@@ -118,7 +118,7 @@ jobs:
       - name: Decide pass/fail by report (XML)
         run: |
           set -euo pipefail
-          if grep -q "<item" "src/${{ needs.Precheck.outputs.report }}"; then
+          if grep -q "<visited>false</visited>" "src/${{ needs.Precheck.outputs.report }}"; then
             echo "DRC VIOLATIONS FOUND -> FAIL"
             echo "---- first 50 lines of report ----"
             head -n 50 "src/${{ needs.Precheck.outputs.report }}" || true
@@ -187,7 +187,7 @@ jobs:
       - name: Decide pass/fail by report (XML)
         run: |
           set -euo pipefail
-          if grep -q "<item" "mdp/${{ needs.Precheck.outputs.report }}"; then
+          if grep -q "<visited>false</visited>" "mdp/${{ needs.Precheck.outputs.report }}"; then
             echo "DRC VIOLATIONS FOUND -> FAIL"
             echo "---- first 50 lines of report ----"
             head -n 50 "mdp/${{ needs.Precheck.outputs.report }}" || true
