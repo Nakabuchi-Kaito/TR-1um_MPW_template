@@ -16,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     # Expose parsed configuration to downstream jobs.
     outputs:
-      gds:    ${{ steps.cfg.outputs.gds }}
-      cell:   ${{ steps.cfg.outputs.cell }}
+      gds:     ${{ steps.cfg.outputs.gds }}
+      cell:    ${{ steps.cfg.outputs.cell }}
       circuit: ${{ steps.cfg.outputs.circuit }}
-      repo:   ${{ steps.cfg.outputs.repo }}
-      ref:    ${{ steps.cfg.outputs.ref }}
-      entry:  ${{ steps.cfg.outputs.entry }}
-      report: ${{ steps.cfg.outputs.report }}
+      repo:    ${{ steps.cfg.outputs.repo }}
+      ref:     ${{ steps.cfg.outputs.ref }}
+      entry:   ${{ steps.cfg.outputs.entry }}
+      report:  ${{ steps.cfg.outputs.report }}
     steps:
       # Checkout repository.
       - uses: actions/checkout@v4
@@ -104,7 +104,7 @@ jobs:
           klayout -b -r TR-1um/libs.tech/klayout/drc/run.drc \
             -rd input=src/${{ needs.Precheck.outputs.gds }} \
             -rd top_cell=${{ needs.Precheck.outputs.cell }} \
-            -rd report=log/${{ needs.Precheck.outputs.report }}
+            -rd report=../log/${{ needs.Precheck.outputs.report }}
 
       # Upload DRC report (if generated).
       - uses: actions/upload-artifact@v4
@@ -119,7 +119,7 @@ jobs:
           klayout -b -r TR-1um/libs.tech/klayout/lvs/run.lvs \
             -rd input=src/${{ needs.Precheck.outputs.gds }} \
             -rd top_cell=${{ needs.Precheck.outputs.cell }} \
-            -rd circuit=src/${{ needs.Precheck.outputs.circuit }}
+            -rd circuit=${{ needs.Precheck.outputs.circuit }}
 
   # MDP job (depends on Precheck and DRC).
   MDP:
