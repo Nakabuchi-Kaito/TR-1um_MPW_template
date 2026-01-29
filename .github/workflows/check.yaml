@@ -19,6 +19,7 @@ jobs:
       gds:     ${{ steps.cfg.outputs.gds }}
       cell:    ${{ steps.cfg.outputs.cell }}
       circuit: ${{ steps.cfg.outputs.circuit }}
+      output:  ${{ steps.cfg.outputs.output }}
       repo:    ${{ steps.cfg.outputs.repo }}
       ref:     ${{ steps.cfg.outputs.ref }}
       entry:   ${{ steps.cfg.outputs.entry }}
