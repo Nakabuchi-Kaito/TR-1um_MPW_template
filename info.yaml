@@ -11,13 +11,14 @@ project:
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  ""      # One line description of what your project does
 
-# Your top module name must start with "tr-1um_". Make it unique by including your github username:
+# Your top module name must start with "tr_1um_". Make it unique by including your github username:
 gds:
-  file:     "tr-1um_example.gds"
-  top_cell: "TOP"
+  file:     "tr_1um_example.gds"
+  top_cell: "tr_1um_example"
 #
+# Your circuit file must start with "tr_1um_". Make it unique by including your github username:
 cir:
-  file:     "tr-1um_example.cir"
+  file:     "tr_1um_example.cir"
 #
 # Your MDP file start with "IP62_". Make it unique by including your github username:
 mdp:
