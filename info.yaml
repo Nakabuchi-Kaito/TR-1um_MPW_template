@@ -16,8 +16,8 @@ gds:
   file:     "tr_1um_example.gds"
   top_cell: "tr_1um_example"
 #
-# Your circuit file must start with "tr_1um_". Make it unique by including your github username:
-cir:
+# Your LVS circuit file must start with "tr_1um_". Make it unique by including your github username:
+lvs:
   file:     "tr_1um_example.cir"
 #
 # Your MDP file start with "IP62_". Make it unique by including your github username:

@@ -49,7 +49,7 @@ jobs:
           gds     = cfg["gds"]["file"]
           cell    = cfg["gds"]["top_cell"]
           output  = cfg["mdp"]["file"]
-          circuit = cfg["cir"]["file"]
+          circuit = cfg["lvs"]["file"]
           repo    = cfg["drc"]["repo"]
           ref     = cfg["drc"]["ref"]
           entry   = cfg["drc"]["entry"]
@@ -57,6 +57,7 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
             f.write(f"gds={gds}\n")
             f.write(f"cell={cell}\n")
+            f.write(f"circuit={circuit}\n")
             f.write(f"repo={repo}\n")
             f.write(f"ref={ref}\n")
             f.write(f"entry={entry}\n")
@@ -104,7 +105,7 @@ jobs:
           klayout -b -r TR-1um/libs.tech/klayout/drc/run.drc \
             -rd input=src/${{ needs.Precheck.outputs.gds }} \
             -rd top_cell=${{ needs.Precheck.outputs.cell }} \
-            -rd report=../log/${{ needs.Precheck.outputs.report }}
+            -rd report=log/${{ needs.Precheck.outputs.report }}
 
       # Upload DRC report (if generated).
       - uses: actions/upload-artifact@v4
