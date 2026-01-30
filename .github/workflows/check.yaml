@@ -167,6 +167,12 @@ jobs:
             -rd top_cell=${{ needs.Precheck.outputs.cell }} \
             -rd output=mdp/${{ needs.Precheck.outputs.output }}
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GDSII_TR
+          if-no-files-found: error
+          path: src/${{ needs.Precheck.outputs.gds }} 
+
       # Upload IP62 GDSII report if no report was generated.
       - uses: actions/upload-artifact@v4
         with:
