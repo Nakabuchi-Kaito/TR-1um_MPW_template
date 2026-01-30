@@ -186,6 +186,7 @@ jobs:
           name: DRC_report_MDP
           if-no-files-found: error
           path: mdp/${{ needs.Precheck.outputs.report }}
+          path: TR-1um/libs.tech/klayout/drc/run_mdp.drc 
 
       - name: Decide pass/fail by report (XML)
         run: |
