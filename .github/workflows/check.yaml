@@ -159,8 +159,8 @@ jobs:
           klayout -b -r TR-1um/${{ needs.Precheck.outputs.pdk_dir }}/klayout/lvs/run.lvs \
             -rd input=src/${{ needs.Precheck.outputs.layout }} \
             -rd top_cell=${{ needs.Precheck.outputs.top_cell }} \
-            -rd circuit=src/${{ needs.Precheck.outputs.circuit }} \
-            -rd extracted=src/${{ needs.Precheck.outputs.extracted }} \
+            -rd circuit=${{ needs.Precheck.outputs.circuit }} \
+            -rd extracted=${{ needs.Precheck.outputs.extracted }} \
             -rd netlist_only=${{ needs.Precheck.outputs.lvs_flag }}
 
       # Upload extracted netlist
