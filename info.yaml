@@ -12,24 +12,26 @@ project:
   description:  ""      # One line description of what your project does
 
 # Your top module name must start with "tr_1um_". Make it unique by including your github username:
+# GDSII filename must be top_cell + "." + extension and placed in src/ directory.
 gds:
-  file:     "tr_1um_example.gds"
-  top_cell: "tr_1um_example"
+  top_cell:     "tr_1um_username"
+  extension:    "gds"
 #
-# Your LVS circuit file must start with "tr_1um_". Make it unique by including your github username:
+# LVS compare filename must be top_cell + "." + extension and placed in src/ directory.
+# LVS comparison is optional, you can switch off it by put netlist_only: "true".
 lvs:
-  file:     "tr_1um_example.cir"
+  extension:    "cir"
+  netlist_only: "false"
 #
 # Your MDP file start with "IP62_". Make it unique by including your github username:
 mdp:
-  file:     "IP62_example.gds"
+  file:         "IP62_username.gds"
 #
 # Donot modify below this line unless you know what you are doing
-# DRC ruleset repository information
-drc:
+# TR-1um PDK repository information
+pdk:
   repo:   "https://github.com/OpenSUSI/TR-1um.git"
   ref:    "main"           # Branch or tag name
-  entry:  "libs.tech"
-  report: "report.lyrdb"
-
+  dir:    "libs.tech"
+#
 yaml_version: 6
